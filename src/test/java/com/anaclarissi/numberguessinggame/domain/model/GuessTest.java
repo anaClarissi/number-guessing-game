@@ -30,7 +30,7 @@ public class GuessTest {
     }
 
     @Test
-    void shouldThrowAnInvalidGuessExceptionWhenTheValueIsMoreThanOneHundred() {
+    void shouldThrowAnInvalidGuessExceptionWhenTheValueIsGreaterThanOneHundred() {
 
         assertThrows(InvalidGuessException.class, () -> new Guess(101, 10));
 
