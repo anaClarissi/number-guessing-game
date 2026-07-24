@@ -27,7 +27,7 @@ public class SecretNumberTest {
     }
 
     @Test
-    void shouldThrowAnIllegalArgumentExceptionWhenTheValueIsMoreThanOneHundred() {
+    void shouldThrowAnIllegalArgumentExceptionWhenTheValueIsGreaterThanOneHundred() {
 
         assertThrows(IllegalArgumentException.class, () -> new SecretNumber(101));
 
