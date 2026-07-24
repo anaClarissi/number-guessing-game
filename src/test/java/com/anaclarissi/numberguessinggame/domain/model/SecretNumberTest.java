@@ -2,12 +2,16 @@ package com.anaclarissi.numberguessinggame.domain.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class SecretNumberTest {
 
     @Test
-    public void shouldCreateAValidNumberAndReturnIt() {
+    void shouldCreateAValidNumberAndReturnIt() {
 
         SecretNumber secretNumber = new SecretNumber(50);
 
@@ -16,35 +20,35 @@ public class SecretNumberTest {
     }
 
     @Test
-    public void shouldThrowAnIllegalArgumentExceptionWhenTheValueIsLessThanOne() {
+    void shouldThrowAnIllegalArgumentExceptionWhenTheValueIsLessThanOne() {
 
         assertThrows(IllegalArgumentException.class, () -> new SecretNumber(0));
 
     }
 
     @Test
-    public void shouldThrowAnIllegalArgumentExceptionWhenTheValueIsMoreThanOneHundred() {
+    void shouldThrowAnIllegalArgumentExceptionWhenTheValueIsMoreThanOneHundred() {
 
         assertThrows(IllegalArgumentException.class, () -> new SecretNumber(101));
 
     }
 
     @Test
-    public void shouldNotThrowAnExceptionWhenTheValueIsOne() {
+    void shouldNotThrowAnExceptionWhenTheValueIsOne() {
 
         assertDoesNotThrow(() -> new SecretNumber(1));
 
     }
 
     @Test
-    public void shouldNotThrowAnExceptionWhenTheValueIsOneHundred() {
+    void shouldNotThrowAnExceptionWhenTheValueIsOneHundred() {
 
         assertDoesNotThrow(() -> new SecretNumber(100));
 
     }
 
     @Test
-    public void shouldReturnTrueWhenTheGuessIsEqualToTheValue() {
+    void shouldReturnTrueWhenTheGuessIsEqualToTheValue() {
 
         SecretNumber secretNumber = new SecretNumber(50);
 
@@ -53,7 +57,7 @@ public class SecretNumberTest {
     }
 
     @Test
-    public void shouldReturnFalseWhenTheGuessIsNotEqualToValue() {
+    void shouldReturnFalseWhenTheGuessIsNotEqualToValue() {
 
         SecretNumber secretNumber = new SecretNumber(50);
 
