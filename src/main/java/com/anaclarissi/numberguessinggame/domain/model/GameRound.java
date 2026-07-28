@@ -62,6 +62,14 @@ public class GameRound {
 
     }
 
+    public int revealSecretNumber() {
+
+        if (!finished) throw new IllegalStateException("Cannot reveal the secret number while the round is still in progress.");
+
+        return secretNumber.getValue();
+
+    }
+
     private void setWon(boolean won) {
         this.won = won;
     }
