@@ -23,34 +23,43 @@ public class GameRunner {
 
         view.showWelcome();
 
-        view.showDifficultyMenu();
+        boolean playAgain = true;
 
-        Difficulty difficulty = input.readDifficultyChoice();
+        while (playAgain) {
 
-        GameRound round = gameService.startNewRound(difficulty);
+            view.showDifficultyMenu();
 
-        while (!round.isOver()) {
+            Difficulty difficulty = input.readDifficultyChoice();
 
-            int guessValue = input.readGuess();
+            GameRound round = gameService.startNewRound(difficulty);
 
-            GuessResult result = gameService.processGuess(round, guessValue);
+            while (!round.isOver()) {
 
-            if (result == GuessResult.CORRECT) {
+                int guessValue = input.readGuess();
 
-                view.showVictory(round.getAttemptsUsed());
+                GuessResult result = gameService.processGuess(round, guessValue);
 
-            } else if (round.isOver()) {
+                if (result == GuessResult.CORRECT) {
 
-                view.showDefeat(round.revealSecretNumber());
+                    view.showVictory(round.getAttemptsUsed());
 
-            } else {
+                } else if (round.isOver()) {
 
-                view.showResult(result, guessValue);
+                    view.showDefeat(round.revealSecretNumber());
+
+                } else {
+
+                    view.showResult(result, guessValue);
+
+                }
 
             }
 
+            playAgain = input.readYesNo("Do you want to play again? (y/n)");
+
         }
 
+        
     }
 
 }
