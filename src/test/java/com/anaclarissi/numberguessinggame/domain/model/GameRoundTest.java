@@ -89,4 +89,26 @@ public class GameRoundTest {
 
     }
 
+    @Test
+    void shouldReturnTheCorrectSecretNumberAfterRoundFinished() {
+
+        GameRound gameRound = new GameRound(new SecretNumber(50), Difficulty.EASY);
+
+        gameRound.registerGuess(50);
+
+        assertEquals(50, gameRound.revealSecretNumber());
+
+    }
+
+    @Test
+    void shouldThrowAnIllegalStateExceptionIfCallingRevealSecretNumberBeforeRoundFinished() {
+
+        GameRound gameRound = new GameRound(new SecretNumber(50), Difficulty.EASY);
+
+        gameRound.registerGuess(10);
+
+        assertThrows(IllegalStateException.class, () -> gameRound.revealSecretNumber());
+
+    }
+
 }
