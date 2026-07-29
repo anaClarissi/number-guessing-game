@@ -2,6 +2,8 @@ package com.anaclarissi.numberguessinggame.presentation;
 
 import com.anaclarissi.numberguessinggame.domain.model.GuessResult;
 
+import java.time.Duration;
+
 public class ConsoleView {
 
     public void showWelcome() {
@@ -17,6 +19,7 @@ public class ConsoleView {
         System.out.println("1. Easy (10 chances)");
         System.out.println("2. Medium (5 chances)");
         System.out.println("3. Hard (3 chances)");
+        System.out.print("Your choice: ");
 
     }
 
@@ -34,15 +37,35 @@ public class ConsoleView {
 
     }
 
-    public void showVictory(int attempts) {
+    public void showVictory(int attempts, Duration elapsedTime) {
 
-        System.out.printf("Congratulations! You guessed the correct number in %d attempt(s).%n", attempts);
+        String timer = getTimer(elapsedTime);
+
+        System.out.printf("Congratulations! You guessed the correct number in %d attempt(s), your duration: %s%n", attempts, timer);
 
     }
 
-    public void showDefeat(int secretValue) {
+    public void showDefeat(int secretValue, Duration elapsedTime) {
 
-        System.out.printf("You ran out of attempts! The correct number was %d.%n", secretValue);
+        String timer = getTimer(elapsedTime);
+
+        System.out.printf("You ran out of attempts! The correct number was %d, your duration: %s%n", secretValue, timer);
+
+    }
+
+    public void showGuessPrompt() {
+
+        System.out.print("Enter a value: ");
+
+    }
+
+    private String getTimer(Duration elapsedTime) {
+
+        int minutes = elapsedTime.toMinutesPart();
+
+        int seconds = elapsedTime.toSecondsPart();
+
+        return String.format("%02d:%02d", minutes, seconds);
 
     }
 

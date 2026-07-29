@@ -45,7 +45,7 @@ public class ConsoleInputReader {
 
     public boolean readYesNo(String question) {
 
-        System.out.println(question);
+        System.out.print(question);
 
         char answer = scanner.nextLine().toLowerCase().charAt(0);
 

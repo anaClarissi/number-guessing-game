@@ -35,17 +35,19 @@ public class GameRunner {
 
             while (!round.isOver()) {
 
+                view.showGuessPrompt();
+
                 int guessValue = input.readGuess();
 
                 GuessResult result = gameService.processGuess(round, guessValue);
 
                 if (result == GuessResult.CORRECT) {
 
-                    view.showVictory(round.getAttemptsUsed());
+                    view.showVictory(round.getAttemptsUsed(), round.getElapsedTime());
 
                 } else if (round.isOver()) {
 
-                    view.showDefeat(round.revealSecretNumber());
+                    view.showDefeat(round.revealSecretNumber(), round.getElapsedTime());
 
                 } else {
 
@@ -55,7 +57,7 @@ public class GameRunner {
 
             }
 
-            playAgain = input.readYesNo("Do you want to play again? (y/n)");
+            playAgain = input.readYesNo("Do you want to play again? (y/n) ");
 
         }
 
