@@ -1,32 +1,37 @@
 package com.anaclarissi.numberguessinggame.domain.model;
 
 import com.anaclarissi.numberguessinggame.domain.exception.OutOfAttemptsException;
+import com.anaclarissi.numberguessinggame.domain.service.GameClockPort;
 import com.anaclarissi.numberguessinggame.domain.service.GuessEvaluator;
+
+import java.time.Duration;
 
 public class GameRound {
 
     private final SecretNumber secretNumber;
-
     private final Difficulty difficulty;
+    private final GuessEvaluator guessEvaluator;
+    private final GameClockPort clock;
 
     private int attemptsUsed;
+    private Duration elapsedTime;
 
     private boolean finished;
-
     private boolean won;
 
-    private final GuessEvaluator guessEvaluator;
-
-    public GameRound(SecretNumber secretNumber, Difficulty difficulty) {
+    public GameRound(SecretNumber secretNumber, Difficulty difficulty, GameClockPort clock) {
 
         this.secretNumber = secretNumber;
         this.difficulty = difficulty;
+        this.clock = clock;
 
         this.attemptsUsed = 0;
         this.finished = false;
         this.won = false;
 
         guessEvaluator = new GuessEvaluator();
+
+        this.clock.start();
 
     }
 
@@ -44,11 +49,13 @@ public class GameRound {
 
             setWon(true);
 
+        }
+
+        if (result == GuessResult.CORRECT || getAttemptsUsed() == difficulty.getMaxAttempts()) {
+
             setFinished(true);
 
-        } else if (getAttemptsUsed() == difficulty.getMaxAttempts()) {
-
-            setFinished(true);
+            this.elapsedTime = clock.stop();
 
         }
 
@@ -67,6 +74,14 @@ public class GameRound {
         if (!finished) throw new IllegalStateException("Cannot reveal the secret number while the round is still in progress.");
 
         return secretNumber.getValue();
+
+    }
+
+    public Duration getElapsedTime() {
+
+        if (!finished) throw new IllegalStateException("Cannot get elapsed time while the round is still in progress.");
+
+        return this.elapsedTime;
 
     }
 
