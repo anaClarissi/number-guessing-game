@@ -3,8 +3,10 @@ package com.anaclarissi.numberguessinggame.application;
 import com.anaclarissi.numberguessinggame.domain.model.Difficulty;
 import com.anaclarissi.numberguessinggame.domain.model.GameRound;
 import com.anaclarissi.numberguessinggame.domain.model.GuessResult;
+import com.anaclarissi.numberguessinggame.domain.service.GameClockPort;
 import com.anaclarissi.numberguessinggame.domain.service.NumberGeneratorPort;
 
+import com.anaclarissi.numberguessinggame.infrastructure.clock.SystemGameClock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +22,8 @@ public class GameServiceTest {
     @Mock
     private NumberGeneratorPort numberGenerator;
 
+    private final GameClockPort clock = new SystemGameClock();
+
     private static final int MIN = 1;
     private static final int MAX = 100;
 
@@ -27,7 +31,7 @@ public class GameServiceTest {
 
     @BeforeEach
     void setUp() {
-        gameService = new GameService(numberGenerator);
+        gameService = new GameService(numberGenerator, clock);
     }
 
     @Test
