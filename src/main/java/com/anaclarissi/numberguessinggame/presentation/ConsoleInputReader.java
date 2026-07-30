@@ -31,11 +31,13 @@ public class ConsoleInputReader {
 
     }
 
-    public int readGuess() {
+    public String readGuessOrHint() {
+        return scanner.nextLine();
+    }
 
-        int guessValue = scanner.nextInt();
+    public int readGuess(String value) {
 
-        scanner.nextLine();
+        int guessValue = Integer.parseInt(value);
 
         if (guessValue < 1 || guessValue > 100) throw new IllegalArgumentException("The Guess value should be between 1 and 100!");
 

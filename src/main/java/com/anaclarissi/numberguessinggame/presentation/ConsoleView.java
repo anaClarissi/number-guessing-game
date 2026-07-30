@@ -53,9 +53,25 @@ public class ConsoleView {
 
     }
 
-    public void showGuessPrompt() {
+    public void showGuessPrompt(boolean hintAvailable) {
 
-        System.out.print("Enter a value: ");
+        if (hintAvailable) {
+            System.out.print("Enter a value (enter 'hint' to get a hint): ");
+        } else {
+            System.out.print("Enter a value: ");
+        }
+
+    }
+
+    public void showHint(String hint) {
+
+        System.out.println(hint);
+
+    }
+
+    public void showHintNotAvailable() {
+
+        System.out.println("Hint not available yet, try guessing first!");
 
     }
 

@@ -35,9 +35,31 @@ public class GameRunner {
 
             while (!round.isOver()) {
 
-                view.showGuessPrompt();
+                boolean hintAvailable = round.getAttemptsUsed() >= 2;
 
-                int guessValue = input.readGuess();
+                view.showGuessPrompt(hintAvailable);
+
+                String guessOrHint = input.readGuessOrHint();
+
+                if (guessOrHint.equalsIgnoreCase("hint")) {
+
+                    if (!hintAvailable) {
+
+                        view.showHintNotAvailable();
+
+                        continue;
+
+                    }
+
+                    String hint = round.getHint();
+
+                    view.showHint(hint);
+
+                    continue;
+
+                }
+
+                int guessValue = input.readGuess(guessOrHint);
 
                 GuessResult result = gameService.processGuess(round, guessValue);
 
