@@ -1,4 +1,4 @@
-package com.anaclarissi.numberguessinggame.application;
+package com.anaclarissi.numberguessinggame.domain.service;
 
 import com.anaclarissi.numberguessinggame.domain.model.Guess;
 import com.anaclarissi.numberguessinggame.domain.model.SecretNumber;
