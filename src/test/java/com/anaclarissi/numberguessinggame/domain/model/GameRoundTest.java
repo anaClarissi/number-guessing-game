@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class GameRoundTest {
 
@@ -142,6 +143,28 @@ public class GameRoundTest {
         }
 
         assertTrue(gameRound.getElapsedTime().toMillis() >= 100);
+
+    }
+
+    @Test
+    void shouldThrowAnIllegalStateExceptionIfCallingGetHintBeforeTheSecondAttempt() {
+
+        GameRound gameRound = new GameRound(new SecretNumber(50), Difficulty.EASY, clock);
+
+        assertThrows(IllegalStateException.class, () -> gameRound.getHint());
+
+    }
+
+    @Test
+    void shouldReturnAValidHintAfterTheFirstAttempt() {
+
+        GameRound gameRound = new GameRound(new SecretNumber(50), Difficulty.EASY, clock);
+
+        gameRound.registerGuess(10);
+
+        gameRound.registerGuess(20);
+
+        assertDoesNotThrow(() -> gameRound.getHint());
 
     }
 

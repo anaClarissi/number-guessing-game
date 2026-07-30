@@ -1,5 +1,6 @@
 package com.anaclarissi.numberguessinggame.domain.model;
 
+import com.anaclarissi.numberguessinggame.domain.service.HintService;
 import com.anaclarissi.numberguessinggame.domain.exception.OutOfAttemptsException;
 import com.anaclarissi.numberguessinggame.domain.service.GameClockPort;
 import com.anaclarissi.numberguessinggame.domain.service.GuessEvaluator;
@@ -12,10 +13,12 @@ public class GameRound {
     private final Difficulty difficulty;
     private final GuessEvaluator guessEvaluator;
     private final GameClockPort clock;
+    private final HintService hintService;
+
+    private Duration elapsedTime;
+    private Guess lastGuess;
 
     private int attemptsUsed;
-    private Duration elapsedTime;
-
     private boolean finished;
     private boolean won;
 
@@ -30,6 +33,7 @@ public class GameRound {
         this.won = false;
 
         guessEvaluator = new GuessEvaluator();
+        hintService = new HintService();
 
         this.clock.start();
 
@@ -42,6 +46,8 @@ public class GameRound {
         setAttemptsUsed(getAttemptsUsed() + 1);
 
         Guess guess = new Guess(value, getAttemptsUsed());
+
+        this.lastGuess = guess;
 
         GuessResult result = guessEvaluator.evaluate(secretNumber, guess);
 
@@ -82,6 +88,14 @@ public class GameRound {
         if (!finished) throw new IllegalStateException("Cannot get elapsed time while the round is still in progress.");
 
         return this.elapsedTime;
+
+    }
+
+    public String getHint() {
+
+        if (getAttemptsUsed() < 2) throw new IllegalStateException("Hint is only available from the second attempt onwards.");
+
+        return hintService.giveHint(secretNumber, lastGuess);
 
     }
 
