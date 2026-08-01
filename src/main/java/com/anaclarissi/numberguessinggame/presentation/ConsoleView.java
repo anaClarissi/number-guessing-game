@@ -1,6 +1,7 @@
 package com.anaclarissi.numberguessinggame.presentation;
 
 import com.anaclarissi.numberguessinggame.domain.model.GuessResult;
+import com.anaclarissi.numberguessinggame.domain.model.ScoreRecord;
 
 import java.time.Duration;
 
@@ -72,6 +73,12 @@ public class ConsoleView {
     public void showHintNotAvailable() {
 
         System.out.println("Hint not available yet, try guessing first!");
+
+    }
+
+    public void showHighScore(ScoreRecord record) {
+
+        System.out.printf("Your best record for %s is: %d attempt(s).%n", record.getDifficulty().getLabel(), record.getBestAttempts());
 
     }
 
